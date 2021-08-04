@@ -1,0 +1,32 @@
+:root{
+    --text-color: #{$light-text-color};
+    --base-background: #{$light-base-background};
+    --secondary-background: #{$light-secondary-background};
+}
+.main {
+    width: 100vw;
+    height: 100vh;
+    font-size: 2rem;
+    background-color: $base-background;
+    color: $text-color;
+    display: flex;
+    font-family: "Poppins", sans-serif;
+
+
+    &--dark {
+            --text-color: #{$dark-text-color};
+            --base-background: #{$dark-base-background};
+            --secondary-background: #{$dark-secondary-background};
+    }
+
+
+    &__nav {
+        width: 17.5vw;
+        flex: 0 1 17.5vw;
+        min-width: 250px;
+    }
+
+    &__base {
+        flex: 1 1 auto;
+    }
+}
