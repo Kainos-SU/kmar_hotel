@@ -1,32 +1,13 @@
 <template>
     <aside class="main__nav main-nav">
             <a href="./" class="main-nav__logo logo">
-                <object type="image/svg+xml" :data="icon" class="logo__icon">
+                <object type="image/svg+xml" :data="Logo" class="logo__icon">
                     Your browser does not support SVG
                  </object>
-                 <svg width="110" height="33" viewBox="0 0 110 33" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo__text">
-                    <use :href="svg_text">
-                        <!-- ./svg/sidebar/kamr.svg#text -->
-                    </use>
-                </svg>
+                 <SvgSprite symbol="text" size="0 0 110 33" class="logo__text"></SvgSprite>
             </a>
             
-            <div class="main-nav__avatar avatar">
-                <div class="avatar__main-circle">
-                    <div class="avatar__segment"></div>
-                    <div class="avatar__segment"></div>
-                    <div class="avatar__segment"></div>
-                    <div class="avatar__avatar"></div>
-                </div>
-                <div class="avatar__edit">
-                    <svg class="avatar__edit-icon" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <use :href="svg_pencil">
-                            <!-- ./svg/sidebar/sprite_base_icon.svg#pencil -->
-                        </use>
-                    </svg>
-                </div>
-
-            </div>
+            <avatar></avatar>
             
             <h2 class="main-nav__name"> {{ _name }} </h2>
 
@@ -45,10 +26,17 @@
 
 <script>
 import NavList from "./NavList.vue";
+import Avatar from "./Avatar.vue";
+import Logo from "@/assets/icon.svg";
+import { SvgSprite } from 'vue-svg-sprite';
+
+
 export default {
     name: "main-nav",
     components: {
         NavList,
+        SvgSprite,
+        Avatar,
     },
     data() {
         return {
@@ -56,20 +44,20 @@ export default {
         }
     },
     props: [
-        'icon',
-        'svg_text',
-        'svg',
         'mail',
         '_name',
     ],
 
     computed: {
-        svg_pencil() {
-            return this.svg + "#pencil";
-        },
         mail_link() {
             return "mailto:" + this.mail;
         },
-    }
+    },
+
+    setup() {
+        return {
+            Logo,
+        };
+    },
 }
 </script>

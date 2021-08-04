@@ -59,73 +59,7 @@
     }
 }
 
-.avatar {
-    position: relative;
-    width: 130 / 345 * 100%;
 
-    &::before {
-        content: "";
-        width: 100%;
-        display: block;
-        padding-top: 100%;
-    }
-
-    &__main-circle {
-        overflow: hidden;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background-color: $local-yelow;
-        border-radius: 50%;
-    }
-
-    &__segment {
-        position: absolute;
-        transform-origin: top left;
-        width: 100%;
-        height: 100%;
-        top: 50%;
-        left: 50%;
-        background-color: $local-orange;
-        transform: rotate(0deg);
-
-
-        &:nth-child(2) {
-            transform: rotate(45deg);
-        }
-
-        &:nth-child(3) {
-            transform: rotate(270deg);
-        }
-    }
-    
-    &__edit {
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        width: 35%;
-        height: 35%;
-        padding: 10px;
-        border: 1px solid $base-background;
-        border-radius: 50%;
-        background-color: $secondary-background;
-    }
-
-    &__avatar {
-        width: calc(100% - 9px);
-        height: calc(100% - 9px);
-        border: 4px solid $secondary-background;
-        border-radius: 50%;
-        overflow: hidden;
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        background-color: grey;
-    }
-}
 
 .nav-list {
     width: 100%;
