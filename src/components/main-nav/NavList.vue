@@ -14,11 +14,11 @@
                 :class="{'nav-list__item--active': curentPosition === index}"
                 :ref="setListItem"
             >
-                <a class="nav-list__anchor" href="#">
+                <router-link class="nav-list__anchor" :to="'/'+ (item!=='dashboard'?item:'')">
                     <SvgSprite :symbol="item" size="0 0 24 24" class="nav-list__icon"></SvgSprite>
                     <!-- <svg><use xlink:href="#dashboard"></use></svg> -->
                     <span class="nav-list__text-title">{{item}}</span>
-                </a>
+                </router-link>
             </li>
 
         </ul>
@@ -51,6 +51,10 @@
         },
 
         methods: {
+            resize () {
+                this.changeActive(this.curentPosition)
+            },
+
             setListItem(el) {
                 if (el) {
                     this.itemRefs.push(el)
@@ -99,18 +103,38 @@
             height() {
                 return this.pointerHeight + "px";
             },
+
+            curentPath () {
+                const path = (window.location.hash).slice(window.location.hash.indexOf('/')+1);
+                const nextSlash = path.indexOf('/');
+                if (nextSlash === -1) {
+                    return path;
+                }
+                return path.slice(0, nextSlash);
+
+            },
         },
 
         beforeUpdate() {
-            this.itemRefs = []
+            this.itemRefs = [];
         },
 
         mounted() {
             this.changeActive(this.curentPosition);
-            window.addEventListener("resize", ()=>this.changeActive(this.curentPosition));
+
+            this.resize = this.resize.bind(this);
+            window.addEventListener("resize", this.resize);
+            
+            let index = 0;
+            if (this.curentPath !== "") {
+                index = this.items.indexOf(this.curentPath);
+            }
+            this.curentPosition = index;
         },
 
-        // unmounted()
+        unmounted() {
+            window.removeEventListener("resize", this.resize);
+        },
 
         // beforeMount() {
         //     this.curentPosition = 0;
@@ -121,7 +145,7 @@
             curentPosition (curent, prev) {
                 console.log(curent, prev);
                 this.changeActive(curent);
-            }
+            },
         }
     }
 </script>

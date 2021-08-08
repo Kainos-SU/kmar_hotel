@@ -1,11 +1,11 @@
 <template>
     <aside class="main__nav main-nav">
-            <a href="./" class="main-nav__logo logo">
+            <router-link to="/" class="main-nav__logo logo">
                 <object type="image/svg+xml" :data="Logo" class="logo__icon">
                     Your browser does not support SVG
                  </object>
                  <SvgSprite symbol="text" size="0 0 110 33" class="logo__text"></SvgSprite>
-            </a>
+            </router-link>
             
             <avatar></avatar>
             

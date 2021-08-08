@@ -16,8 +16,9 @@
     </title-block>
     <div class="scrolable base-content">
       <div class="container">
+        <router-view :config="configure" @config-change="setConfig"></router-view>
         <!-- <settings :config="configure" @config-change="setConfig"></settings> -->
-        <consierge-list></consierge-list>
+        <!-- <consierge-list></consierge-list> -->
       </div>
     </div>
   </div>
@@ -27,7 +28,7 @@
 import MainNav from "./components/main-nav/MainNav.vue";
 import TitleBlock from "./components/header/TitleBlock.vue";
 // import Settings from "./components/content/Settings.vue";
-import ConsiergeList from "./components/content/ConciergeList.vue";
+// import ConsiergeList from "./components/content/ConciergeList.vue";
 
 export default {
   name: "App",
@@ -45,7 +46,7 @@ export default {
     MainNav,
     TitleBlock,
     // Settings,
-    ConsiergeList,
+    // ConsiergeList,
   },
 
   methods: {
