@@ -1,32 +1,46 @@
-:root{
+body{
     --text-color: #{$light-text-color};
     --base-background: #{$light-base-background};
     --secondary-background: #{$light-secondary-background};
+    --border-color: #{$light-border-color};
+    --local-grey: #{$local-grey-light};
 }
-.main {
-    width: 100vw;
-    height: 100vh;
-    font-size: 2rem;
-    background-color: $base-background;
-    color: $text-color;
-    display: flex;
-    font-family: "Poppins", sans-serif;
 
+.scrolable {
+    scrollbar-width: thin;
+    scrollbar-color: $base-background $text-color;
 
-    &--dark {
-            --text-color: #{$dark-text-color};
-            --base-background: #{$dark-base-background};
-            --secondary-background: #{$dark-secondary-background};
+    &::-webkit-scrollbar{
+        width: 5px;
+        border-radius: 3px;
+        background-color: $text-color;
     }
-
-
-    &__nav {
-        width: 17.5vw;
-        flex: 0 1 17.5vw;
-        min-width: 250px;
+    &::-webkit-scrollbar-button{
+        width: 100%;
+        height: 0;
     }
-
-    &__base {
-        flex: 1 1 auto;
+    &::-webkit-scrollbar-thumb{
+        background-color: $base-background;
+        opacity: 0.5;
     }
+    &::-webkit-scrollbar-coner{
+        height: 0;
+        background: transparent;
+    }
+    &::-webkit-scrollbar-resizer{
+        height: 0;
+    }
+}
+
+.dark {
+    --text-color: #{$dark-text-color};
+    --base-background: #{$dark-base-background};
+    --secondary-background: #{$dark-secondary-background};
+    --border-color: #{$dark-border-color};
+    --local-grey: #{$local-grey-dark};
+}
+
+.container {
+    width: 95%;
+    margin: auto;
 }
