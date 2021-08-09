@@ -80,7 +80,6 @@ export default {
         flex-direction: column;
         align-items: flex-start;
         background-color: $secondary-background;
-        overflow-y: auto;
 
         &__logo {
             align-self: center;
@@ -129,7 +128,7 @@ export default {
             color: $menu-color;
             font-weight: 400;
         }
-        @media screen and (max-width: 560px) {
+        @media screen and (max-width: 620px) {
             position: relative;
             overflow: visible;
             padding: 2.5%;

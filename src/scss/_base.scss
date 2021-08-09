@@ -7,6 +7,7 @@ body{
 }
 
 .scrolable {
+    overflow: auto;
     scrollbar-width: thin;
     scrollbar-color: $base-background $text-color;
 

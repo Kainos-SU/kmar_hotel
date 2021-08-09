@@ -207,7 +207,7 @@
             color: $local-orange;
         }
 
-        @media screen and (max-width: 560px) {
+        @media screen and (max-width: 620px) {
             &__header {
                 display: none;
             }

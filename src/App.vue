@@ -121,8 +121,8 @@ export default {
     font-family: "Poppins", sans-serif;
 
     &__nav {
-      width: 18vw;
-      flex: 0 1 18vw;
+      width: 345 / 1920 * 100%;
+      flex: 0 0 18%;
       min-width: 250px;
     }
 
@@ -132,7 +132,7 @@ export default {
       flex-direction: column;
     }
 
-    @media screen and (max-width: 560px) {
+    @media screen and (max-width: 620px) {
       flex-direction: column-reverse;
 
       &__nav {

@@ -225,6 +225,12 @@
             height: 48px;
             margin: auto 10px;
 
+            @media screen and (min-width: 1910px) {
+                width: 252px;
+                margin: auto 16px auto 60px;
+            }
+
+
             @media screen and (max-width: 1000px) {
                 width: 60px;
             }
@@ -243,11 +249,12 @@
         &__calendar-icon {
             position: absolute;
             top: 50%;
-            left: 32px;
+            left: 32 / 252 * 100%;
             transform: translate(-50%, -50%);
             width: 20px;
             color: $local-orange;
 
+            
             @media screen and (max-width: 1000px) and (min-width: 800px) {
                 left: 50%;
             }
