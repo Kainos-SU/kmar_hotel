@@ -42,10 +42,10 @@
             join() {
                 const date = this.consierge.join;
                 const format = Intl.DateTimeFormat("en-US",{
-                    // year: "numeric",
-                    // month: "short",
+                    year: "numeric",
+                    month: "long",
                     // day: "2-digit",
-                    dateStyle: "long",
+                    // dateStyle: "long",
                 });
                 return format.format(date);
             },
@@ -56,14 +56,12 @@
 
 <style lang="scss">
     .consierge-card {
-        min-width: 300px;
         width: 22%;
         padding: 30px;
         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.06);
         border-radius: 24px;
         transition: box-shadow 0.25s;
         background-color: $secondary-background;
-        margin-bottom: 40px;
 
         &:hover {
             box-shadow: 0px 22px 47px rgba(0, 0, 0, 0.08);
@@ -193,10 +191,12 @@
                 content: "active";
                 text-transform: capitalize;
                 color: $local-green;
+                margin-left: 8%;
             }
         }
 
         &--inactive &__join {
+            font-size: 13 / 16 * 1rem;
             &::after {
                 content: "inactive";
                 color: $local-grey;
