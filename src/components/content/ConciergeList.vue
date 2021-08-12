@@ -17,7 +17,7 @@
             </ul>
             <custom-search @input="search"/>
             <custom-select :items="sorts" @change="sort"></custom-select>
-
+            <button-modal @send="log" :names="consiergeParams">Add concierge</button-modal>
         </div>
         <ul class="consierge-list__list">
             <consierge-card
@@ -34,6 +34,7 @@
 <script>
     import ConsiergeCard from '../subComponents/ConsiergeCard.vue';
     import CustomSelect from '../subComponents/CustomSelect.vue';
+    import ButtonModal from '../subComponents/ButtonModal.vue';
     import CustomSearch from '../subComponents/CustomSearch.vue';
     import logo from "@/assets/logo.png";
 
@@ -42,10 +43,16 @@
             ConsiergeCard,
             CustomSelect,
             CustomSearch,
+            ButtonModal,
         },
 
         data() {
             return {
+                consiergeParams: [
+                    "name",
+                    "phone",
+                    "job desc"
+                ],
                 showActive: true,
                 showInactive: true,
                 sorts: [
@@ -109,6 +116,10 @@
         },
 
         methods: {
+            log(i) {
+                console.log(i);
+            },
+
             sort(event) {
                 const sorting = (a,b)=>{
                     const aValue = a.join.valueOf();
