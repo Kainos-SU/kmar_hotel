@@ -15,18 +15,21 @@
                     @click="setInactive"
                 >inactive</li>
             </ul>
-            <custom-search @input="search"/>
-            <custom-select :items="sorts" @change="sort"></custom-select>
-            <button-modal @send="log" :names="consiergeParams">Add concierge</button-modal>
+            <custom-search class="consierge-list__search" @input="search"/>
+            <custom-select class="consierge-list__select" :items="sorts" @change="sort"></custom-select>
+            <button-modal class="consierge-list__btn" @send="log" :names="consiergeParams">Add concierge</button-modal>
         </div>
         <ul class="consierge-list__list">
             <consierge-card
                 class="consierge-list__item"
-                v-for="(consierge, index) in consiergeList"
+                v-for="(consierge, index) in pageList"
                 :key="index"
                 :consierge="consierge"
                 v-show = "(consierge.active && showActive) || (!(consierge.active) && showInactive)"
             ></consierge-card>
+        </ul>
+        <ul class="consierge-list__pages">
+            <li class="consierge-list__page" v-for="index in pageLength" :key="index">{{index}}</li>
         </ul>
     </div>
 </template>
@@ -36,7 +39,6 @@
     import CustomSelect from '../subComponents/CustomSelect.vue';
     import ButtonModal from '../subComponents/ButtonModal.vue';
     import CustomSearch from '../subComponents/CustomSearch.vue';
-    import logo from "@/assets/logo.png";
 
     export default {
         components: {
@@ -48,6 +50,8 @@
 
         data() {
             return {
+                page: 0,
+                elementsOnPage: 6,
                 consiergeParams: [
                     "name",
                     "phone",
@@ -59,59 +63,7 @@
                     {value:0, name:"Sort by Newest"},
                     {value:1, name:"Sort by Oldest"}
                 ],
-                consiergeList: [
-                    {
-                        active: true,
-                        name: "alfonso franci",
-                        id: "#EMP-00025",
-                        tel: "+380970477946",
-                        desc: "Answering guest inquiries, directing phone calls, coordinating travel plans, and more.",
-                        join: new Date("2020", "0", "21"),
-                        image: logo
-                    },
-                    {
-                        active: false,
-                        name: "andy lee",
-                        id: "#EMP-00023",
-                        tel: "+380970477946",
-                        desc: "Offer restaurant and activity recommendations and assist guests in arranging transportation",
-                        join: new Date("2021", "0", "21"),
-                    },
-                    {
-                        active: true,
-                        name: "alfonso franci",
-                        id: "#EMP-00025",
-                        tel: "+380970477946",
-                        desc: "Answering guest inquiries, directing phone calls, coordinating travel plans, and more.",
-                        join: new Date("2020", "11", "21"),
-                        image: logo
-                    },
-                    {
-                        active: false,
-                        name: "andy lee",
-                        id: "#EMP-00023",
-                        tel: "+380970477946",
-                        desc: "Offer restaurant and activity recommendations and assist guests in arranging transportation",
-                        join: new Date("2020", "5", "2"),
-                    },
-                    {
-                        active: true,
-                        name: "alfonso franci",
-                        id: "#EMP-00025",
-                        tel: "+380970477946",
-                        desc: "Answering guest inquiries, directing phone calls, coordinating travel plans, and more.",
-                        join: new Date("2021", "5", "5"),
-                        image: logo
-                    },
-                    {
-                        active: false,
-                        name: "andy lee",
-                        id: "#EMP-00023",
-                        tel: "+380970477946",
-                        desc: "Offer restaurant and activity recommendations and assist guests in arranging transportation",
-                        join: new Date(),
-                    }
-                ],
+                consiergeList: [],
             };
         },
 
@@ -162,6 +114,34 @@
                 this.showInactive = true;
             },
         },
+
+        async created() {
+            const response = await fetch("./json/consierge-list.json");
+            const data = await response.json();
+            for (const consierge of data) {
+                consierge.join = new Date(consierge.join);
+                this.consiergeList.push(consierge);
+            }
+        },
+
+        computed: {
+            pageLength() {
+                const length = this.consiergeList.length;
+                const pages = Math.floor(length / this.elementsOnPage) + (length % this.elementsOnPage!==0?1:0);
+                return pages;
+            },
+
+            pageList() {
+                const start = this.page * this.elementsOnPage;
+                const end = start + this.elementsOnPage;
+                if (this.consiergeList < end) {
+                    return this.consiergeList.slice(start);
+                }
+                return this.consiergeList.slice(start, end);
+            },
+        },
+
+
         
     }
 </script>
@@ -169,6 +149,33 @@
 <style lang="scss">
     .consierge-list {
         
+        &__header {
+            display: flex;
+            align-items: center;
+        }
+
+        &__filters {
+            width: calc(339 / 1476 * 100%);
+        }
+
+        &__search {
+            margin: 0 calc(24 / 1476 * 100%) 0 calc(149 / 1476 * 100%);
+            width: calc(554 / 1476 * 100%);
+
+            @media screen and (max-width: 1400px) {
+                margin-left: calc(49 / 1476 * 100%);
+                width: 35%;
+            }
+        }
+
+        &__select {
+            width: calc(187 / 1476 * 100%);
+            margin-right: calc(24 / 1476 * 100%);
+
+            @media screen and (max-width: 1400px) {
+                width: 150px;
+            }
+        }
 
 
         &__list {

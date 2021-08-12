@@ -62,16 +62,12 @@
             },
 
             setCurentPosition(index) {
-                console.log(index)
                 this.curentPosition = index;
             },
 
             changeActive(index) {
                 const parrent = this.$refs.list;
                 const element = this.itemRefs[index];
-                // console.log(parrent, element);
-                // const element = event.currentTarget;
-                // const parrent = element.parentNode;
                 
                 const elementPostition = element.getBoundingClientRect();
                 const parrentPosition = parrent.getBoundingClientRect();
@@ -142,8 +138,7 @@
         // },
 
         watch: {
-            curentPosition (curent, prev) {
-                console.log(curent, prev);
+            curentPosition (curent) {
                 this.changeActive(curent);
             },
         }

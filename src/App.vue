@@ -8,7 +8,7 @@
   <div class="main__base">
     <title-block>
       <template v-slot:title>
-        Header
+        {{this.$router.currentRoute.value.name}}
       </template>
       <template v-slot:sub-title>
         Welcome to Kamr! Modern Hotel Admin Dashboard

@@ -1,0 +1,121 @@
+[
+    {
+        "active": true,
+        "name": "alfonso franci",
+        "id": "#EMP-00001",
+        "tel": "+380970477946",
+        "desc": "Answering guest inquiries, directing phone calls, coordinating travel plans, and more.",
+        "join": 1388527200000,
+        "image": null
+    },
+
+    {
+        "active": true,
+        "name": "Andy lee",
+        "id": "#EMP-00002",
+        "tel": "+380970477946",
+        "desc": "Offer restaurant and activity recommendations and assist guests in arranging transportation ",
+        "join": 1628808059893,
+        "image": null
+    },
+
+    {
+        "active": true,
+        "name": "craig schleifer",
+        "id": "#EMP-00003",
+        "tel": "+380970477946",
+        "desc": "Act as a liaison between guests and any department necessary including the kitchen, housekeeping, etc",
+        "join": 1264975200000,
+        "image": null
+    },
+
+    {
+        "active": true,
+        "name": "Davis Lubin",
+        "id": "#EMP-00004",
+        "tel": "+380970477946",
+        "desc": "Maintain inventory of supplies and order new stock as needed",
+        "join": 1388527200000,
+        "image": null
+    },
+
+    {
+        "active": true,
+        "name": "davis stanton",
+        "id": "#EMP-00005",
+        "tel": "+380970477946",
+        "desc": "Anticipate guests needs in order to accommodate them and provide an exceptional guest experience",
+        "join": 1527800400000,
+        "image": null
+    },
+
+    {
+        "active": true,
+        "name": "giana ekstrom bothman",
+        "id": "#EMP-00006",
+        "tel": "+380970477946",
+        "desc": "Answering guest inquiries, directing phone calls, coordinating travel plans, and more.",
+        "join": 1572559200000,
+        "image": null
+    },
+
+    {
+        "active": true,
+        "name": "Gretchen Botosh",
+        "id": "#EMP-00007",
+        "tel": "+380970477946",
+        "desc": "Maintain inventory of supplies and order new stock as needed",
+        "join": 1588280400000,
+        "image": null
+    },
+
+    {
+        "active": true,
+        "name": "Jaxson Saris",
+        "id": "#EMP-00008",
+        "tel": "+380970477946",
+        "desc": "Offer restaurant and activity recommendations and assist guests in arranging transportation ",
+        "join": 1430427600000,
+        "image": null
+    },
+
+    {
+        "active": true,
+        "name": "Kadin Vetrovs",
+        "id": "#EMP-00009",
+        "tel": "+380970477946",
+        "desc": "Answering guest inquiries, directing phone calls, coordinating travel plans, and more.",
+        "join": 1264975200000,
+        "image": null
+    },
+
+    {
+        "active": true,
+        "name": "Kaiya Culhane",
+        "id": "#EMP-00010",
+        "tel": "+380970477946",
+        "desc": "Answering guest inquiries, directing phone calls, coordinating travel plans, and more.",
+        "join": 1388527200000,
+        "image": null
+    },
+
+    {
+        "active": true,
+        "name": "Marilyn Kenter",
+        "id": "#EMP-00011",
+        "tel": "+380970477946",
+        "desc": "Answering guest inquiries, directing phone calls, coordinating travel plans, and more.",
+        "join": 1401570000000,
+        "image": null
+    },
+
+    {
+        "active": true,
+        "name": "Roger Levin",
+        "id": "#EMP-00025",
+        "tel": "+380970477946",
+        "desc": "Answering guest inquiries, directing phone calls, coordinating travel plans, and more.",
+        "join": 1401880000000,
+        "image": null
+    }
+]

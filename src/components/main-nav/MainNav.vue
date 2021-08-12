@@ -16,7 +16,7 @@
                 {{mail}}
             </a>
 
-            <nav-list class="main-nav__nav" :items="navListItems" @switch="log">main menu</nav-list>
+            <nav-list class="main-nav__nav" :items="navListItems">main menu</nav-list>
 
             <p class="main-nav__dashboard-name">Kamr Hotel Admin Dashboard</p>
             <p class="main-nav__copy">&copy; 2021 All Rights Reserved</p>
