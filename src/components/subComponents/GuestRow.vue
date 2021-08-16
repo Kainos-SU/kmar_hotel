@@ -6,12 +6,31 @@
             {{guest.name}}
         </td>
         <td class="guest-row__order">
-
+            {{orderDate}}
+            <br>
+            {{orderTime}}
         </td>
-        <td class="guest-row__check-in"></td>
-        <td class="guest-row__check-out"></td>
-        <td class="guest-row__room"></td>
-        <td class="guest-row__status"></td>
+        <td class="guest-row__check-in">
+            {{checkInDate}}
+            <br>
+            {{checkInTime}}
+        </td>
+        <td class="guest-row__check-out">
+            {{checkOutDate}}
+            <br>
+            {{checkOutTime}}
+        </td>
+        <td class="guest-row__room">
+            <div class="guest-row__room-name">
+                {{guest.roomName}}
+            </div>
+            <div class="guest-row__room-id">
+                Room No. {{String(guest.roomId).padStart(4, "0")}}
+            </div>
+        </td>
+        <td :class="{'guest-row__status':true, 'guest-row__status--booked':guest.status===0, 'guest-row__status--pending':guest.status===1, 'guest-row__status--canceled':guest.status===2, 'guest-row__status--refund':guest.status===3}">
+            {{getStatus}}
+        </td>
         <td class="guest-row__menu">
             <div class="guest-row__menu-icon">
                 <div class="guest-row__dot"></div>
@@ -31,14 +50,84 @@ export default {
             type: Object,
             required: true,
         },
+        
+        locale: {
+            type: String,
+            default: "en-US",
+        }
+    },
+
+    methods: {
+        getDate (date) {
+            const format = new Intl.DateTimeFormat(this.locale, {
+                weekday: "long",
+                month: "short",
+                year: "numeric",
+                day: "numeric",
+            });
+
+            return format.format(date);
+        },
+
+        getTime (date) {
+            const format = new Intl.DateTimeFormat(this.locale, {
+                hour: "2-digit",
+                minute: "2-digit",
+            });
+
+            return format.format(date);
+        },
+
+        getBaseDate(date) {
+            const format = new Intl.DateTimeFormat(this.locale, {
+                month: "short",
+                year: "numeric",
+                day: "numeric",
+            });
+
+            return format.format(date);
+        },
     },
 
     computed: {
-        odrderDate() {
-            const date = this.guest.odrder;
-            return date;
+        orderDate() {
+            return this.getDate(this.guest.order);
         },
-    }
+
+        orderTime() {
+            return this.getTime(this.guest.order);
+        },
+
+        checkInDate () {
+            return this.getBaseDate(this.guest.checkIn);
+        },
+
+        checkInTime () {
+            return this.getTime(this.guest.checkIn);
+        },
+
+        checkOutDate () {
+            return this.getBaseDate(this.guest.checkOut);
+        },
+
+        checkOutTime () {
+            return this.getTime(this.guest.checkOut);
+        },
+
+        getStatus () {
+            switch (this.guest.status) {
+                case 0:
+                    return "booked";
+                case 1:
+                    return "pending";
+                case 2:
+                    return "canceled";
+                default:
+                    return "refund";
+            }    
+        },
+
+    },
 }
 </script>
 

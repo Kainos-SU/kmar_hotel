@@ -1,9 +1,10 @@
 <template>
     <div class="guest-list">
-        <table class="guest-list__table guest-table">
+        <circular-loader v-show="loading"/>
+        <table class="guest-list__table guest-table" v-show="!loading">
             <thead class="guest-table__head">
                 <tr class="guest-table__head-row">
-                    <th class="guest-table__head-cell">
+                    <th class="guest-table__head-cell" @click="sortByName">
                         guest
                         <span class="guest-table__sort-icon">
                             <SvgSprite class="guest-table__icon" symbol="upSort" size="0 0 11 6" />
@@ -61,33 +62,62 @@
 <script>
     import PageSelector from "../subComponents/PageSelector.vue";
     import GuestRow from "../subComponents/GuestRow.vue";
+    import CircularLoader from "../subComponents/CircularLoader.vue";
     export default {
         name: "GuestList",
         components: {
             PageSelector,
             GuestRow,
+            CircularLoader,
         },
 
         data() {
-            const today = new Date();
-            const tomorrow = new Date(today.getDate() + 1);
-            const checkOut = new Date(tomorrow.getDate() + 1);
             return {
                 contentOnPage: 6,
+                loading: true,
                 guests: [
-                    {
-                        id: "GS-2234",
-                        name: "Kierra Geidt",
-                        order: today,
-                        checkIn: tomorrow,
-                        checkOut,
-                        roomName: "Queen A-2345",
-                        roomId: 24,
-                        status: 1
-                        //status: 0-booked, 1-pending, 2-cancled, 3-refund
-                    },
+                   
                 ],
             };
+        },
+
+        methods: {
+            sortByState() {
+                return this.guests.sort((a, b)=>{
+                    const aState = a.status;
+                    const bState = b.status;
+                    const aName = a.name;
+                    const bName = b.name;
+                    if (aState < bState) {
+                        return -1;
+                    }
+                    if (aState > bState) {
+                        return 1;
+                    }
+                    if (aName < bName) {
+                        return -1
+                    }
+                    if (aName > bName) {
+                        return 1;
+                    }
+                    return 0;
+                });
+            },
+
+            sortByName() {
+                return this.guests.sort((a, b)=>{
+                    const aValue = a.name;
+                    const bValue = b.name;
+                    if (aValue < bValue) {
+                        return -1;
+                    }
+                    if (aValue > bValue) {
+                        return 1;
+                    }
+
+                    return 0;
+                });
+            },
         },
 
         computed: {
@@ -99,7 +129,23 @@
                 const pages = Math.floor(this.list.length / this.contentOnPage) + (this.list.length / this.contentOnPage === 0)?0:1;
                 return pages;
             }
-        }
+        },
+
+        async created() {
+            this.loading = true;
+            
+            const response = await fetch("./json/guest-list.json");
+            const data = await response.json();
+            for (let guest of data) {
+                guest.order = new Date(guest.order);
+                guest.checkIn = new Date(guest.checkIn);
+                guest.checkOut = new Date(guest.checkOut);
+                this.guests.push(guest);
+            }
+            //some code
+
+            this.loading = false;
+        },
     }
 </script>
 

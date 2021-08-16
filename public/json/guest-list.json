@@ -1,0 +1,63 @@
+[
+    {
+        "id": "GS-2234",
+        "name": "Kierra Geidt",
+        "order": 1629096456346,
+        "checkIn": 1629183211645,
+        "checkOut": 1629185211645,
+        "roomName": "Queen A-2345",
+        "roomId": 24,
+        "status": 1
+    },
+
+    {
+        "id": "GS-2235",
+        "name": "Gustavo Aminoff",
+        "order": 1592718600000,
+        "checkIn": 1592891400000,
+        "checkOut": 1592977800000,
+        "roomName": "Queen A-2344",
+        "roomId": 25,
+        "status": 0
+    },
+    {
+        "id": "GS-2236",
+        "name": "Alena Westervet",
+        "order": 1624254600000,
+        "checkIn": 1624427400000,
+        "checkOut": 1624513800000,
+        "roomName": "Queen A-2346",
+        "roomId": 26,
+        "status": 2
+    },
+    {
+        "id": "GS-2237",
+        "name": "Tiana Workman",
+        "order": 1620201000000,
+        "checkIn": 1620373800000,
+        "checkOut": 1620460200000,
+        "roomName": "Queen A-2347",
+        "roomId": 27,
+        "status": 3
+    },
+    {
+        "id": "GS-2238",
+        "name": "Makenna Rosser",
+        "order": 1614936600000,
+        "checkIn": 1615109400000,
+        "checkOut": 1615195800000,
+        "roomName": "Queen A-2350",
+        "roomId": 28,
+        "status": 0
+    },
+    {
+        "id": "GS-2239",
+        "name": "Skylar Septimus",
+        "order": 1614937200000,
+        "checkIn": 1615110000000,
+        "checkOut": 1615196400000,
+        "roomName": "Queen A-2451",
+        "roomId": 29,
+        "status": 0
+    }
+]

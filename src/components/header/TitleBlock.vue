@@ -46,6 +46,11 @@
             SvgSprite,
             CustomSelect,
         },
+
+        emits: [
+            "changeLocale",
+        ],
+
         data() {
             return {
                 visibleSearch: false,
@@ -62,6 +67,7 @@
         methods: {
             getSelect(event) {
                 this.locale = event;
+                this.$emit("changeLocale", this.locale.locale + "-" + this.locale.region);
             },
 
             showInput() {
