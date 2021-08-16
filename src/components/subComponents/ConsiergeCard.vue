@@ -1,5 +1,5 @@
 <template>
-    <li :class="{'consierge-card':true, 'consierge-card--inactive':!consierge.active}">
+    <div :class="{'consierge-card':true, 'consierge-card--inactive':!consierge.active}">
         <div class="consierge-card__avatar" :style="{'background-color':consierge.image?'transparent':''}">
             <img v-if="consierge.image" :src="consierge.image" alt="" class="consierge-card__image">
         </div>
@@ -12,7 +12,7 @@
             <a :href="'tel:' + consierge.tel" class="consierge-card__icon">
                 <SvgSprite class="consierge-card__icon-svg" symbol="phone" size="0 0 23 23"></SvgSprite>
             </a>
-            <a href="" class="consierge-card__icon">
+            <a href="#" class="consierge-card__icon">
                 <span class="consierge-card__dot"></span>
                 <span class="consierge-card__dot"></span>
                 <span class="consierge-card__dot"></span>
@@ -22,7 +22,7 @@
         <div class="consierge-card__desc-title">job desc</div>
         <div class="consierge-card__desc">{{consierge.desc}}</div>
 
-    </li>
+    </div>
 </template>
 
 <script>
@@ -56,7 +56,7 @@
 
 <style lang="scss">
     .consierge-card {
-        width: 22%;
+        min-height: 100%;
         padding: 30px;
         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.06);
         border-radius: 24px;

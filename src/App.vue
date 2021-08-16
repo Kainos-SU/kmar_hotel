@@ -151,5 +151,6 @@ export default {
   .base-content {
     flex: 1 1 auto;
     padding-top: 30px;
+    position: relative;
   }
 </style>

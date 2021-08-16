@@ -1,37 +1,26 @@
 <template>
-    <div class="consierge-list">
-        <div class="consierge-list__header">
-            <ul class="consierge-list__filters filters-list">
-                <li
-                    :class="{'filters-list__item':true, 'filters-list__item--active':showActive && showInactive}"
-                    @click="setAll"
-                >all stats</li>
-                <li
-                    :class="{'filters-list__item':true, 'filters-list__item--active':showActive && !showInactive}"
-                    @click="setActive"
-                >active</li>
-                <li
-                    :class="{'filters-list__item':true, 'filters-list__item--active':!showActive && showInactive}"
-                    @click="setInactive"
-                >inactive</li>
-            </ul>
-            <custom-search class="consierge-list__search" @input="search"/>
-            <custom-select class="consierge-list__select" :items="sorts" @change="sort"></custom-select>
-            <button-modal class="consierge-list__btn" @send="log" :names="consiergeParams">Add concierge</button-modal>
+        <div>
+            <circular-loader v-if="isLoading"/>    
+            <div v-else class="consierge-list">
+                <div class="consierge-list__header">
+                    <radio-buttons @seted="setFilterMode" :names="filters" groop="filter" class="consierge-list__filters"/>
+                    <custom-search class="consierge-list__search" @input="search"/>
+                    <custom-select class="consierge-list__select" :items="sorts" @change="setSortMode"></custom-select>
+                    <button-modal class="consierge-list__btn" @send="addConsierge" :names="consiergeParams">Add concierge</button-modal>
+                </div>
+                <ul class="consierge-list__list">
+                    <li
+                        class="consierge-list__item"
+                        v-for="consierge in pageList"
+                        :key="consierge.id">
+                        <consierge-card
+                            :consierge="consierge"
+                        ></consierge-card>
+                    </li>
+                </ul>
+                <page-selector class="consierge-list__pages-list" :pageNumbers="pageLength" @pageChange="setPage"/>
+            </div>
         </div>
-        <ul class="consierge-list__list">
-            <consierge-card
-                class="consierge-list__item"
-                v-for="(consierge, index) in pageList"
-                :key="index"
-                :consierge="consierge"
-                v-show = "(consierge.active && showActive) || (!(consierge.active) && showInactive)"
-            ></consierge-card>
-        </ul>
-        <ul class="consierge-list__pages">
-            <li class="consierge-list__page" v-for="index in pageLength" :key="index">{{index}}</li>
-        </ul>
-    </div>
 </template>
 
 <script>
@@ -39,40 +28,64 @@
     import CustomSelect from '../subComponents/CustomSelect.vue';
     import ButtonModal from '../subComponents/ButtonModal.vue';
     import CustomSearch from '../subComponents/CustomSearch.vue';
+    import CircularLoader from '../subComponents/CircularLoader.vue';
+    import RadioButtons from '../subComponents/RadioButtons.vue';
+    import PageSelector from '../subComponents/PageSelector.vue';
 
+    
     export default {
         components: {
             ConsiergeCard,
             CustomSelect,
             CustomSearch,
             ButtonModal,
+            CircularLoader,
+            RadioButtons,
+            PageSelector,
         },
 
         data() {
             return {
+                isLoading: false,
                 page: 0,
-                elementsOnPage: 6,
+                elementsOnPage: 12,
                 consiergeParams: [
                     "name",
                     "phone",
                     "job desc"
                 ],
-                showActive: true,
-                showInactive: true,
+                filterMode: 0,
+                filters: [
+                    "all stats",
+                    "active",
+                    "inactive",
+                ],
                 sorts: [
                     {value:0, name:"Sort by Newest"},
                     {value:1, name:"Sort by Oldest"}
                 ],
+                sortMode: 0,
                 consiergeList: [],
             };
         },
 
         methods: {
-            log(i) {
-                console.log(i);
+            addConsierge(event) {
+                const consierge = {};
+                consierge.active = true;
+                consierge.image = null;
+                consierge.join = new Date();
+                consierge.name = event.name;
+                consierge.desc = event["job desc"];
+
+                this.consiergeList.push(consierge);
             },
 
-            sort(event) {
+            setSortMode (value) {
+                this.sortMode = value;
+            },
+
+            sort(value) {
                 const sorting = (a,b)=>{
                     const aValue = a.join.valueOf();
                     const bValue = b.join.valueOf();
@@ -85,48 +98,57 @@
                     }
                     return 0;
                 };
-                if (event === 0) {
+                if (value === 0) {
                     this.consiergeList.sort(sorting);
                     return;
                 }
-                if (event === 1) {
+                if (value === 1) {
                     this.consiergeList.sort((a, b)=>sorting(a,b)*-1);
                     return;
                 }
+            },
+
+            setFilterMode (value) {
+                this.filterMode = value;
+                console.log(value + "\t" + this.filterMode);
             },
 
             search(event) {
                 console.log(event);
             },
 
-            setAll () {
-                this.showActive = true;
-                this.showInactive = true;
-            },
+            setPage(number) {
+                this.page = number;
+            }
 
-            setActive () {
-                this.showActive = true;
-                this.showInactive = false;
-            },
-
-            setInactive () {
-                this.showActive = false;
-                this.showInactive = true;
-            },
         },
 
         async created() {
+            this.isLoading = true;
             const response = await fetch("./json/consierge-list.json");
             const data = await response.json();
             for (const consierge of data) {
                 consierge.join = new Date(consierge.join);
                 this.consiergeList.push(consierge);
             }
+            this.isLoading = false;
         },
 
         computed: {
+
+            getList() {
+                this.sort(this.sortMode);
+                if (this.filterMode === 2) {
+                    return this.consiergeList.filter(a=>!(a.active));
+                }
+                if (this.filterMode === 1) {
+                    return this.consiergeList.filter(a=>a.active);
+                }
+                return this.consiergeList;
+            },
+
             pageLength() {
-                const length = this.consiergeList.length;
+                const length = this.getList.length;
                 const pages = Math.floor(length / this.elementsOnPage) + (length % this.elementsOnPage!==0?1:0);
                 return pages;
             },
@@ -134,10 +156,10 @@
             pageList() {
                 const start = this.page * this.elementsOnPage;
                 const end = start + this.elementsOnPage;
-                if (this.consiergeList < end) {
-                    return this.consiergeList.slice(start);
+                if (this.getList.lenght < end) {
+                    return this.getList.slice(start);
                 }
-                return this.consiergeList.slice(start, end);
+                return this.getList.slice(start, end);
             },
         },
 
@@ -181,20 +203,21 @@
         &__list {
             display: flex;
             flex-wrap: wrap;
-            padding: 50px;
+            padding: 50px 0 40px;
         }
 
         &__item {
             flex: 0 1 auto;
             min-width: 250px;
+            width: 22%;
             margin-bottom: 40 / 1476 * 100%;
             margin-right: 40 / 1476 * 100%;
 
-            @media screen and (max-width: 1450px) {
+            @media screen and (max-width: 1575px) {
                 width: 30%;
             }
 
-            @media screen and (max-width: 1115px) {
+            @media screen and (max-width: 1220px) {
                 width: 45%;
             }
 
@@ -204,6 +227,9 @@
             }
         }
 
+        &__pages-list {
+            margin-bottom: 50px;
+        }
 
     }
 </style>

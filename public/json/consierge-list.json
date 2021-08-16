@@ -117,5 +117,15 @@
         "desc": "Answering guest inquiries, directing phone calls, coordinating travel plans, and more.",
         "join": 1401880000000,
         "image": null
+    },
+
+    {
+        "active": false,
+        "name": "john dou",
+        "id": "#EMP-00026",
+        "tel": "+380970477946",
+        "desc": "Answering guest inquiries, directing phone calls, coordinating travel plans, and more.",
+        "join": 1401870000000,
+        "image": null
     }
 ]
