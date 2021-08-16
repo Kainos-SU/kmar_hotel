@@ -1,24 +1,25 @@
 <template>
     <tr class="guest-row">
         <td class="guest-row__guest">
-            {{guest.id}}
-            <br>
-            {{guest.name}}
+            <a href="#" @click.prevent class="guest-row__guest-id">
+                {{guest.id}}
+            </a>
+            
+            <div class="guest-row__guest-name">
+                {{guest.name}}
+            </div>
         </td>
         <td class="guest-row__order">
-            {{orderDate}}
-            <br>
-            {{orderTime}}
+            <div class="guest-row__order-date">{{orderDate}}</div>
+            <div class="guest-row__order-time">{{orderTime}}</div>
         </td>
         <td class="guest-row__check-in">
-            {{checkInDate}}
-            <br>
-            {{checkInTime}}
+            <div class="guest-row__checkIn-date">{{checkInDate}}</div>
+            <div class="guest-row__checkIn-time">{{checkInTime}}</div>
         </td>
         <td class="guest-row__check-out">
-            {{checkOutDate}}
-            <br>
-            {{checkOutTime}}
+            <div class="guest-row__checkOut-date">{{checkOutDate}}</div>
+            <div class="guest-row__checkOut-time">{{checkOutTime}}</div>
         </td>
         <td class="guest-row__room">
             <div class="guest-row__room-name">
@@ -29,7 +30,7 @@
             </div>
         </td>
         <td :class="{'guest-row__status':true, 'guest-row__status--booked':guest.status===0, 'guest-row__status--pending':guest.status===1, 'guest-row__status--canceled':guest.status===2, 'guest-row__status--refund':guest.status===3}">
-            {{getStatus}}
+            <div>{{getStatus}}</div>
         </td>
         <td class="guest-row__menu">
             <div class="guest-row__menu-icon">
@@ -133,6 +134,99 @@ export default {
 
 <style lang="scss">
     .guest-row {
+
+        height: 125px;
+
+        &__guest-id {
+            color: $local-orange;
+            font-weight: 400;
+            font-family: inherit;
+            font-size: 1rem;
+            display: block;
+            margin-bottom: 8px;
+            text-transform: uppercase
+        }
+
+        &__guest-name {
+            font-weight: 500;
+            font-size: 15 / 16 * 1rem;
+            font-weight: 400;
+            color:$text-color;
+        }
+
+        &__order-date,
+        &__checkIn-date,
+        &__checkOut-date,
+        &__room-name {
+            font-size: 15 / 16 * 1rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        &__order-time,
+        &__checkIn-time,
+        &__checkOut-time,
+        &__room-id {
+            font-size: 14 / 16 * 1rem;
+            font-weight: 400;
+        }
+
+        &__status {
+            text-transform: capitalize;
+            vertical-align: middle;
+            & div {
+                width: 113px;
+                height: 50px;
+                border-radius: 14px;
+                transition: background-color 0.25s, color 0.25s;
+                font-size: 15 / 16 * 1rem;
+                font-weight: 500;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                &:hover {
+                    color: $text-color;
+                }
+            }
+
+            &--pending div {
+                background-color: rgba($local-yellow, 0.15);
+                color: $local-yellow;
+
+                &:hover {
+                    background-color: $local-yellow;
+                }
+            }
+
+            &--booked div {
+                background-color: rgba($local-green, 0.15);
+                color: $local-green;
+
+                &:hover {
+                    background-color: $local-green;
+                }
+            }
+
+            &--canceled div {
+                background-color: rgba($menu-color, 0.15);
+                color: $menu-color;
+
+                &:hover {
+                    background-color: $menu-color;
+                }
+            }
+
+            &--refund div {
+                background-color: rgba($local-red, 0.15);
+                color: $local-red;
+
+                &:hover {
+                    background-color: $local-red;
+                }
+            }
+        }
+
         &__menu {
             vertical-align: middle;
         }
