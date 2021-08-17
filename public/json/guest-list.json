@@ -18,7 +18,8 @@
         "checkOut": 1592977800000,
         "roomName": "Queen A-2344",
         "roomId": 25,
-        "status": 0
+        "status": 0,
+        "img": "./img/johnny.jpg"
     },
     {
         "id": "GS-2236",
@@ -38,7 +39,8 @@
         "checkOut": 1620460200000,
         "roomName": "Queen A-2347",
         "roomId": 27,
-        "status": 3
+        "status": 3,
+        "img": "./img/sasha.jpg"
     },
     {
         "id": "GS-2238",
@@ -60,4 +62,5 @@
         "roomId": 29,
         "status": 0
     }
+    
 ]

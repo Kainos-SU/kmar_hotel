@@ -15,6 +15,7 @@
                         :key="consierge.id">
                         <consierge-card
                             :consierge="consierge"
+                            :query="searchQuery"
                         ></consierge-card>
                     </li>
                 </ul>
@@ -48,6 +49,7 @@
             return {
                 isLoading: false,
                 page: 0,
+                searchQuery: "",
                 elementsOnPage: 12,
                 consiergeParams: [
                     "name",
@@ -115,6 +117,7 @@
 
             search(event) {
                 console.log(event);
+                this.searchQuery = event;
             },
 
             setPage(number) {
@@ -138,13 +141,16 @@
 
             getList() {
                 this.sort(this.sortMode);
+                const vm = this;
+                const list = this.searchQuery === "" ? this.consiergeList : this.consiergeList.filter(a=>a.name.toLowerCase().indexOf(vm.searchQuery.toLowerCase()) !== -1);
+
                 if (this.filterMode === 2) {
-                    return this.consiergeList.filter(a=>!(a.active));
+                    return list.filter(a=>!(a.active));
                 }
                 if (this.filterMode === 1) {
-                    return this.consiergeList.filter(a=>a.active);
+                    return list.filter(a=>a.active);
                 }
-                return this.consiergeList;
+                return list;
             },
 
             pageLength() {

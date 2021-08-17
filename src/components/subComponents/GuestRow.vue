@@ -1,6 +1,16 @@
 <template>
     <tr class="guest-row">
-        <td class="guest-row__guest">
+        <td class="guest-row__guest-avatar">
+            <div class="guest-row__avatar" :style="{color: guest.img?'transparent':'#C4C4C4'}">
+                <img
+                    v-show="guest.img"
+                    :src="guest.img"
+                    alt="Avatar"
+                    class="guest-row__photo">
+            </div>
+        </td>
+
+        <td class="guest-row__guest guest-row__cell">
             <a href="#" @click.prevent class="guest-row__guest-id">
                 {{guest.id}}
             </a>
@@ -9,30 +19,38 @@
                 {{guest.name}}
             </div>
         </td>
-        <td class="guest-row__order">
-            <div class="guest-row__order-date">{{orderDate}}</div>
-            <div class="guest-row__order-time">{{orderTime}}</div>
-        </td>
-        <td class="guest-row__check-in">
-            <div class="guest-row__checkIn-date">{{checkInDate}}</div>
-            <div class="guest-row__checkIn-time">{{checkInTime}}</div>
-        </td>
-        <td class="guest-row__check-out">
-            <div class="guest-row__checkOut-date">{{checkOutDate}}</div>
-            <div class="guest-row__checkOut-time">{{checkOutTime}}</div>
-        </td>
-        <td class="guest-row__room">
-            <div class="guest-row__room-name">
-                {{guest.roomName}}
-            </div>
-            <div class="guest-row__room-id">
-                Room No. {{String(guest.roomId).padStart(4, "0")}}
+        <td class="guest-row__order guest-row__cell">
+            <div class="guest-row__wrapper">
+                <div class="guest-row__order-date">{{orderDate}}</div>
+                <div class="guest-row__order-time">{{orderTime}}</div>
             </div>
         </td>
-        <td :class="{'guest-row__status':true, 'guest-row__status--booked':guest.status===0, 'guest-row__status--pending':guest.status===1, 'guest-row__status--canceled':guest.status===2, 'guest-row__status--refund':guest.status===3}">
+        <td class="guest-row__check-in guest-row__cell">
+            <div class="guest-row__wrapper">
+                <div class="guest-row__checkIn-date">{{checkInDate}}</div>
+                <div class="guest-row__checkIn-time">{{checkInTime}}</div>
+            </div>
+        </td>
+        <td class="guest-row__check-out guest-row__cell">
+            <div class="guest-row__wrapper">
+                <div class="guest-row__checkOut-date">{{checkOutDate}}</div>
+                <div class="guest-row__checkOut-time">{{checkOutTime}}</div>
+            </div>
+        </td>
+        <td class="guest-row__room guest-row__cell">
+            <div class="guest-row__wrapper">
+                <div class="guest-row__room-name">
+                    {{guest.roomName}}
+                </div>
+                <div class="guest-row__room-id">
+                    Room No. {{String(guest.roomId).padStart(4, "0")}}
+                </div>
+            </div>
+        </td>
+        <td :class="{'guest-row__cell':true, 'guest-row__status':true, 'guest-row__status--booked':guest.status===0, 'guest-row__status--pending':guest.status===1, 'guest-row__status--canceled':guest.status===2, 'guest-row__status--refund':guest.status===3}">
             <div>{{getStatus}}</div>
         </td>
-        <td class="guest-row__menu">
+        <td class="guest-row__menu guest-row__cell">
             <div class="guest-row__menu-icon">
                 <div class="guest-row__dot"></div>
                 <div class="guest-row__dot"></div>
@@ -134,8 +152,46 @@ export default {
 
 <style lang="scss">
     .guest-row {
-
         height: 125px;
+
+        &__cell {
+            padding-left: 15px;
+
+            &:last-child {
+                padding: 0;
+                vertical-align: middle;
+                text-align: center;
+            }
+        }
+
+        &__wrapper {
+            display: inline-block;
+            text-align: left;
+        }
+
+        &__avatar {
+            width: 58px;
+            height: 58px;
+            overflow: hidden;
+            background-color: currentColor;
+            border-radius: 50%;
+            margin-right: 24px;
+        }
+
+        &__photo {
+            width: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        &__guest-avatar {
+            padding-left: 20px;
+        }
+
+        &__guest {
+            padding: 0;
+        }
+
 
         &__guest-id {
             color: $local-orange;
@@ -144,7 +200,11 @@ export default {
             font-size: 1rem;
             display: block;
             margin-bottom: 8px;
-            text-transform: uppercase
+            text-transform: uppercase;
+
+            &::before {
+                content: "#";
+            }            
         }
 
         &__guest-name {

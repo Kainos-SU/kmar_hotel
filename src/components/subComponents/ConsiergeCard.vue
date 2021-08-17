@@ -3,7 +3,7 @@
         <div class="consierge-card__avatar" :style="{'background-color':consierge.image?'transparent':''}">
             <img v-if="consierge.image" :src="consierge.image" alt="" class="consierge-card__image">
         </div>
-        <h4 class="consierge-card__name">{{consierge.name}}</h4>
+        <h4 class="consierge-card__name" v-html="name"></h4>
         <p class="consierge-card__id">{{consierge.id}}</p>
         <div class="consierge-card__icons">
             <a href="#" class="consierge-card__icon">
@@ -35,7 +35,11 @@
         props: {
             consierge: {
                 required: true,
-            }
+            },
+            query: {
+                type: String,
+                default: "",
+            },
         },
 
         computed: {
@@ -49,12 +53,28 @@
                 });
                 return format.format(date);
             },
+
+            name() {
+                const index = this.consierge.name.toLowerCase().indexOf(this.query.toLowerCase());
+                if (this.query === "" || index === -1) {
+                    return this.consierge.name;
+                }
+                const name = this.consierge.name;
+                const endIndex = index + this.query.length;
+                const result = `${name.slice(0, index===0?0:index-1)}<span class="highlight">${name.slice(index, endIndex)}</span>${name.slice(endIndex)}`;
+                return result;
+            },
         },
         
     }
 </script>
 
 <style lang="scss">
+    .highlight {
+        background-color: rgba($local-yellow, 0.15);
+        text-transform: uppercase;
+    }
+
     .consierge-card {
         min-height: 100%;
         padding: 30px;

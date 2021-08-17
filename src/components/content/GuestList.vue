@@ -5,7 +5,7 @@
             <thead class="guest-table__head">
                 <tr class="guest-table__head-row">
                     <template v-for="key in Object.keys(sortMode)" :key="key">
-                        <th class="guest-table__head-cell" @click="changeSortMode(key)">
+                        <th class="guest-table__head-cell" :colspan="key==='guest'?2:1" @click="changeSortMode(key)">
                             {{key}}
                             <span :class="{'guest-table__sort-icon':true, 'guest-table__sort-icon--up': sortMode[key]===1, 'guest-table__sort-icon--down': sortMode[key]===2}">
                                 <SvgSprite class="guest-table__icon" symbol="upSort" size="0 0 11 6" />
@@ -18,12 +18,12 @@
                 </tr>
             </thead>
             <tbody class="guest-table__body">
-                <template v-for="guest in guests" :key="guest.id">
-                    <guest-row :guest="guest" />
+                <template v-for="guest in list" :key="guest.id">
+                    <guest-row :guest="guest" class="guest-table__guest"/>
                 </template>
             </tbody>
         </table>
-        <page-selector :pageNumbers="pages" class="guest-list__pages"></page-selector>
+        <page-selector @pageChange="changeCurentPage" :pageNumbers="pages" class="guest-list__pages"></page-selector>
     </div>
 </template>
 
@@ -42,6 +42,7 @@
         data() {
             return {
                 contentOnPage: 6,
+                curentPage: 0,
                 loading: true,
                 guests: [],
                 sortMode: {
@@ -149,14 +150,27 @@
                     }
                     return 0;
                 });
-            }
+            },
+
+            changeCurentPage(index) {
+                this.curentPage = index;
+            },
         },
 
         computed: {
             pages() {
-                const pages = Math.floor(this.guests.length / this.contentOnPage) + (this.guests.length / this.contentOnPage === 0)?0:1;
+                const pages = Math.floor(this.guests.length / this.contentOnPage) + ((this.guests.length % this.contentOnPage === 0)?0:1);
                 return pages;
-            }
+            },
+
+            list() {
+                const firstElement = this.curentPage * this.contentOnPage;
+                const lastElement = firstElement + this.contentOnPage;
+                if (lastElement >= this.guests.length-1) {
+                    return this.guests.slice(firstElement);
+                }
+                return this.guests.slice(firstElement, lastElement);
+            },
         },
 
         watch: {
@@ -204,7 +218,10 @@
 
 <style lang="scss">
     .guest-list {
-
+        padding-bottom: 50px;
+        &__table {
+            margin-bottom: 66px
+        }
     }
 
     .guest-table {
@@ -219,12 +236,14 @@
         }
 
         &__head-cell {
+            padding: 22px 5px;
+            padding-left: 15px;
+            text-align: left;
             vertical-align: middle;
             text-transform: capitalize;
             font-size: 18 / 16 * 1rem;
             font-weight: 500;
             cursor: pointer;
-            padding: 22px 5px;
 
             &:first-child {
                 padding-left: 20px;
@@ -253,6 +272,13 @@
 
         &__sort-icon--down &__icon:last-child{
             color: $local-orange;
+        }
+
+        &__guest {
+            background-color: $base-background;
+            &:nth-child(2n) {
+                background-color: $secondary-background;
+            }
         }
     }
 </style>
