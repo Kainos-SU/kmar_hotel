@@ -61,6 +61,8 @@ export default {
         &__label {
             display: block;
             width: 100%;
+            display: flex;
+            align-items: center;
         }
 
         &__mark {

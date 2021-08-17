@@ -2,6 +2,7 @@
 node_modules
 /dist
 
+kmar_deploy
 
 # local env files
 .env.local

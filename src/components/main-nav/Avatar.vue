@@ -4,11 +4,14 @@
             <div class="avatar__segment"></div>
             <div class="avatar__segment"></div>
             <div class="avatar__segment"></div>
-            <div class="avatar__avatar"></div>
+            <div class="avatar__avatar">
+                <img v-if="image!==''" :src="image" alt="Avatar" class="avatar__photo">
+            </div>
         </div>
-        <div class="avatar__edit">
+        <label class="avatar__edit">
+            <input type="file" @change="imageParser">
             <SvgSprite symbol="pencil" class="avatar__edit-icon" viewBox="0 0 20 20"></SvgSprite>
-        </div>
+        </label>
 
     </div>
 </template>
@@ -19,7 +22,26 @@
         name: "avatar",
         components: {
             SvgSprite,
-        }
+        },
+
+        data() {
+            return {
+                image: "",
+            };
+        },
+
+        methods: {
+            imageParser(event) {
+                const image = event.target.files[0];
+
+                if (image === undefined) {
+                    this.image="";
+                    return;
+                }
+                const url = URL.createObjectURL(image);
+                this.image = url;
+            }
+        },
     }
 </script>
 
@@ -27,6 +49,11 @@
     .avatar {
         position: relative;
         width: 130 / 345 * 100%;
+
+        & input[type=file] {
+            appearance: none;
+            display: none;
+        }
 
         &::before {
             content: "";
@@ -67,6 +94,7 @@
         }
         
         &__edit {
+            display: block;
             position: absolute;
             right: -5%;
             bottom: -8%;
@@ -101,6 +129,13 @@
             top: 50%;
             transform: translate(-50%, -50%);
             background-color: $grey-playceholder;
+        }
+
+        
+        &__photo {
+            width: 100%;
+            object-fit: cover;
+            object-position: center;
         }
     }
 </style>

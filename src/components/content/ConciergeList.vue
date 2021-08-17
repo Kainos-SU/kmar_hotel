@@ -74,6 +74,7 @@
         methods: {
             addConsierge(event) {
                 const consierge = {};
+                consierge.id = "#EMP-" + String(this.lastId + 1).padStart(5, "0");
                 consierge.active = true;
                 consierge.image = null;
                 consierge.join = new Date();
@@ -138,6 +139,19 @@
         },
 
         computed: {
+
+            lastId() {
+                let id = 0;
+                const reg = /(?<=0)\d+/gi;
+                for (const consierge of this.consiergeList) {
+                    const curentId = consierge.id.match(reg)[0];
+                    if (id < (+curentId)) {
+                        id = parseInt(curentId)
+                    }
+                }
+
+                return id;
+            },
 
             getList() {
                 this.sort(this.sortMode);
